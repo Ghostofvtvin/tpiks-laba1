@@ -1,31 +1,69 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34408.163
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project1", "Project1\Project1.vcxproj", "{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Debug|x64.ActiveCfg = Debug|x64
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Debug|x64.Build.0 = Debug|x64
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Debug|x86.ActiveCfg = Debug|Win32
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Debug|x86.Build.0 = Debug|Win32
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Release|x64.ActiveCfg = Release|x64
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Release|x64.Build.0 = Release|x64
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Release|x86.ActiveCfg = Release|Win32
-		{B40A5DA6-C55D-489F-B1CE-C318AAE37F96}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {86810399-0C73-41E9-B3CF-528B19FF1E32}
-	EndGlobalSection
-EndGlobal
+﻿#include <iostream>
+using namespace std;
+
+class City {
+private:
+    int residential_buildings;
+    int industrial_building;
+    int unique_buildings;
+    int park;
+    int store;
+
+public:
+    // Конструктор
+    City(int res_buildings, int ind_building, int uniq_buildings, int parks, int stores) {
+        residential_buildings = res_buildings;
+        industrial_building = ind_building;
+        unique_buildings = uniq_buildings;
+        park = parks;
+        store = stores;
+    }
+
+    // Метод расчета уровня развития города
+    double calculateDevelopmentLevel() {
+        // Проверка на нулевые значения
+        if (residential_buildings == 0 || industrial_building == 0 || unique_buildings == 0) {
+            cout << "Уровень развития города равен нулю." << endl;
+            return 0;
+        }
+
+        // Основная формула расчета уровня развития города
+        double development_level = ((residential_buildings * (industrial_building + park + store) - residential_buildings)
+            * ((unique_buildings + park + store) / (double)industrial_building));
+
+        return development_level;
+    }
+};
+
+int main() {
+    setlocale(LC_ALL, "russian");
+    // Ввод данных для города
+    int residential_buildings, industrial_building, unique_buildings, park, store;
+
+    cout << "Введите количество жилых зданий: ";
+    cin >> residential_buildings;
+
+    cout << "Введите количество промышленных зданий: ";
+    cin >> industrial_building;
+
+    cout << "Введите количество уникальных зданий: ";
+    cin >> unique_buildings;
+
+    cout << "Введите количество парков: ";
+    cin >> park;
+
+    cout << "Введите количество магазинов: ";
+    cin >> store;
+
+    // Создаем объект класса City
+    City city(residential_buildings, industrial_building, unique_buildings, park, store);
+
+    // Расчет уровня развития
+    double development_level = city.calculateDevelopmentLevel();
+
+    if (development_level > 0) {
+        cout << "Уровень развития города Racun City: " << development_level << endl;
+    }
+
+    return 0;
+}
